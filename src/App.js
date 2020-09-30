@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createUseStyles } from 'react-jss';
+import SignUpForm from './containers/SignUpForm';
+
+const useStyles = createUseStyles({
+	container: {
+		backgroundColor: '#d6d6d6',
+		minHeight: '100vh',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		boxShadow: 'inset 0px -8px 10px -5px rgba(0, 0, 0, 0.4)'
+	}
+});
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const classes = useStyles();
+
+	return (
+		<div className={classes.container}>
+			<SignUpForm />
+		</div>
+	);
 }
 
 export default App;
