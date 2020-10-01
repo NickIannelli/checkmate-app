@@ -30,16 +30,19 @@ export default function LoginForm() {
 			setSubmitting(true);
 
 			signIn(e.email, e.password)
-				.then(({ success, reason }) => {
-					if (success) {
+				.then(
+					() => {
 						history.replace('/app/');
-					} else if (reason.code === 'UserNotConfirmedException') {
-						history.replace(`/confirm/${e.email}`);
-					} else {
-						console.log('reason.code', reason.code);
-						toast.error(reason.message);
+					},
+					reason => {
+						if (reason.code === 'UserNotConfirmedException') {
+							history.replace(`/confirm/${e.email}`);
+						} else {
+							console.log('reason.code', reason.code);
+							toast.error(reason.message);
+						}
 					}
-				})
+				)
 				.finally(() => {
 					setSubmitting(false);
 				});

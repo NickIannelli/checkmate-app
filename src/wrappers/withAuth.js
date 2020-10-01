@@ -3,7 +3,7 @@ import { getIsAuthenticated } from '../api/login';
 
 const withAuth = Component => props => {
 	const [isAuthenticated, setAuthenticated] = React.useState();
-	React.useLayoutEffect(() => {
+	React.useEffect(() => {
 		getIsAuthenticated().then(
 			() => {
 				setAuthenticated(true);
@@ -12,7 +12,7 @@ const withAuth = Component => props => {
 				setAuthenticated(false);
 			}
 		);
-	});
+	}, []);
 
 	return <Component isAuthenticated={isAuthenticated} {...props} />;
 };

@@ -30,34 +30,35 @@ export const signIn = async (username, password) => {
 		Pool: userPool
 	});
 
-	try {
-		return new Promise(resolve => {
-			const authDetails = new AuthenticationDetails({
-				Username: username,
-				Password: password
-			});
-
-			cognitoUser.authenticateUser(authDetails, {
-				onSuccess: () => {
-					cognitoUser.getSession((err, session) => {
-						if (err) {
-							resolve({ success: false, reason: err });
-						} else {
-							cognitoUser.setSignInUserSession(session);
-							resolve({ success: true, session });
-						}
-					});
-				},
-				onFailure: reason => {
-					resolve({ success: false, reason });
-				}
-			});
+	return new Promise((resolve, reject) => {
+		const authDetails = new AuthenticationDetails({
+			Username: username,
+			Password: password
 		});
-	} catch (e) {
-		return {
-			success: false,
-			reason: e
-		};
+
+		cognitoUser.authenticateUser(authDetails, {
+			onSuccess: () => {
+				cognitoUser.getSession((err, session) => {
+					if (err) {
+						reject(err);
+					} else {
+						cognitoUser.setSignInUserSession(session);
+						resolve(session);
+					}
+				});
+			},
+			onFailure: reason => {
+				reject(reason);
+			}
+		});
+	});
+};
+
+export const signOut = () => {
+	const cognitoUser = userPool.getCurrentUser();
+
+	if (cognitoUser) {
+		cognitoUser.signOut();
 	}
 };
 
