@@ -6,6 +6,7 @@ import { signIn } from '../api/login';
 import Button from '../components/Button';
 import HeaderedBox from '../components/HeaderedBox';
 import InputField from '../components/InputField';
+import Icon from '../components/Icon';
 import useForm from '../hooks/useForm';
 
 const useStyles = createUseStyles({
@@ -15,6 +16,9 @@ const useStyles = createUseStyles({
 	},
 	boxContainer: {
 		margin: '2em'
+	},
+	iconSpinner: {
+		animationDuration: '1s'
 	}
 });
 
@@ -65,7 +69,7 @@ export default function LoginForm() {
 				<InputField type="email" placeholder="Email" {...fields.email} {...submittingState} />
 				<InputField type="password" placeholder="Password" {...fields.password} {...submittingState} />
 				<Button {...submittingState} type="submit" modifiers={['block', 'orange', 'strong', 'spaceTop', 'spaceBottom']}>
-					Sign in
+					Sign in {submitting && <Icon icon="sync-alt" spin className={classes.iconSpinner} />}
 				</Button>
 			</form>
 		</HeaderedBox>

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { verifyUser } from '../api/login';
 import Button from '../components/Button';
 import HeaderedBox from '../components/HeaderedBox';
+import Icon from '../components/Icon';
 import InputField from '../components/InputField';
 import useForm from '../hooks/useForm';
 
@@ -15,6 +16,9 @@ const useStyles = createUseStyles({
 	},
 	boxContainer: {
 		margin: '2em'
+	},
+	iconSpinner: {
+		animationDuration: '1s'
 	}
 });
 
@@ -57,7 +61,7 @@ export default function ConfirmEmailForm({ email }) {
 			<form onSubmit={handleSubmit(onSubmit)} action="#" className={classes.form}>
 				<InputField type="text" placeholder="Verification Code" {...fields.verificationCode} {...submittingState} />
 				<Button {...submittingState} type="submit" modifiers={['block', 'orange', 'strong', 'spaceTop', 'spaceBottom']}>
-					Confirm
+					Confirm {submitting && <Icon icon="sync-alt" spin className={classes.iconSpinner} />}
 				</Button>
 			</form>
 		</HeaderedBox>

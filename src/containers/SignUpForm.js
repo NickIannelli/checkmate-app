@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { signUp } from '../api/login';
 import Button from '../components/Button';
 import HeaderedBox from '../components/HeaderedBox';
+import Icon from '../components/Icon';
 import InputField from '../components/InputField';
 import useForm from '../hooks/useForm';
 
@@ -22,6 +23,9 @@ const useStyles = createUseStyles({
 	},
 	boxContainer: {
 		margin: '2em'
+	},
+	iconSpinner: {
+		animationDuration: '1s'
 	}
 });
 
@@ -78,7 +82,7 @@ export default function LoginForm() {
 					{...submittingState}
 				/>
 				<Button {...submittingState} type="submit" modifiers={['block', 'orange', 'strong', 'spaceTop', 'spaceBottom']}>
-					Sign up!
+					Sign up! {submitting && <Icon icon="sync-alt" spin className={classes.iconSpinner} />}
 				</Button>
 			</form>
 		</HeaderedBox>
