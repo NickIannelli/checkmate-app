@@ -16,6 +16,30 @@ const useStyles = createUseStyles({
 			outline: 'none'
 		}
 	},
+	link: {
+		display: 'inline',
+		background: 'none',
+		border: 'none',
+		margin: 0,
+		padding: 0,
+		fontSize: '1em',
+		textAlign: 'left',
+		color: 'blue',
+		userSelect: 'text',
+		textDecoration: 'underline',
+
+		'&:hover': {
+			color: 'darkblue'
+		},
+
+		'&:active': {
+			color: 'red'
+		},
+
+		[activeNotDisabled]: {
+			outline: 'none'
+		}
+	},
 	block: {
 		width: '100%'
 	},
@@ -45,8 +69,12 @@ const useStyles = createUseStyles({
 	}
 });
 
-export default forwardRef(function Button({ type = 'button', modifiers, className, ...props }, ref) {
+export default forwardRef(function Button({ type = 'button', isLink, modifiers = [], className, ...props }, ref) {
 	const classes = useStyles();
+
+	if (isLink) {
+		return <button type="button" className={classes.link} {...props} />;
+	}
 
 	const classNames = ['base', className, ...modifiers]
 		.map(modifier => classes[modifier])

@@ -105,3 +105,23 @@ export const verifyUser = (Username, code) => {
 		}
 	});
 };
+
+export const resendCode = Username => {
+	const cognitoUser = new CognitoUser({
+		Username,
+		Pool: userPool
+	});
+
+	return new Promise((resolve, reject) => {
+		try {
+			cognitoUser.resendConfirmationCode((err, result) => {
+				if (err) {
+					reject(err);
+				}
+				resolve(result);
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
