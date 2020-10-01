@@ -9,7 +9,6 @@ export default withAuth(function ConfirmEmailPage({ isAuthenticated }) {
 	return (
 		<>
 			{isAuthenticated && <Redirect to="/app/" />}
-			{/* {!email && <Redirect to="/" />} */}
 			<ConfirmEmailForm email={email} />
 		</>
 	);

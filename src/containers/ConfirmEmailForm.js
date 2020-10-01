@@ -1,6 +1,7 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { verifyUser } from '../api/login';
 import Button from '../components/Button';
 import HeaderedBox from '../components/HeaderedBox';
@@ -34,7 +35,7 @@ export default function ConfirmEmailForm({ email }) {
 						history.replace('/app/');
 					},
 					rej => {
-						console.error(rej);
+						toast.error(rej.message);
 					}
 				)
 				.finally(() => {

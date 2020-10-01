@@ -25,24 +25,27 @@ export default function LoginForm() {
 	const { fields, handleSubmit } = useForm({
 		fields: ['email', 'password']
 	});
-	const onSubmit = React.useCallback(e => {
-		setSubmitting(true);
+	const onSubmit = React.useCallback(
+		e => {
+			setSubmitting(true);
 
-		signIn(e.email, e.password)
-			.then(({ success, reason }) => {
-				if (success) {
-					history.replace('/app/');
-				} else if (reason.code === 'UserNotConfirmedException') {
-					history.replace(`/confirm/${e.email}`);
-				} else {
-					console.log('reason.code', reason.code);
-					toast.error(reason.message);
-				}
-			})
-			.finally(() => {
-				setSubmitting(false);
-			});
-	}, []);
+			signIn(e.email, e.password)
+				.then(({ success, reason }) => {
+					if (success) {
+						history.replace('/app/');
+					} else if (reason.code === 'UserNotConfirmedException') {
+						history.replace(`/confirm/${e.email}`);
+					} else {
+						console.log('reason.code', reason.code);
+						toast.error(reason.message);
+					}
+				})
+				.finally(() => {
+					setSubmitting(false);
+				});
+		},
+		[history]
+	);
 	const submittingState = submitting
 		? {
 				disabled: true
