@@ -1,6 +1,8 @@
 import React, { forwardRef } from 'react';
 import { createUseStyles } from 'react-jss';
 
+const activeNotDisabled = '&:hover:enabled, &:active:enabled, &:focus:enabled';
+
 const useStyles = createUseStyles({
 	base: {
 		transition: 'all 0.2s ease',
@@ -9,7 +11,7 @@ const useStyles = createUseStyles({
 		border: 'none',
 		boxShadow: '0 2px 5px -1px rgba(0, 0, 0, 0.5), 0 2px 10px 0 rgba(0, 0, 0, 0.1)',
 
-		'&:hover, &:active, &:focus': {
+		[`${activeNotDisabled}, &:disabled`]: {
 			boxShadow: '0 4px 7px -3px rgba(0, 0, 0, 0.8), 0 0 5px 0 rgba(0, 0, 0, 0.4)',
 			outline: 'none'
 		}
@@ -27,8 +29,12 @@ const useStyles = createUseStyles({
 		background: '#F56B2F',
 		color: 'white',
 
-		'&:hover, &:active, &:focus': {
+		[activeNotDisabled]: {
 			background: '#d2683a'
+		},
+
+		'&:disabled': {
+			background: '#984926'
 		}
 	},
 	spaceTop: {

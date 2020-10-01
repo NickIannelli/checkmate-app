@@ -31,7 +31,7 @@ export const signIn = async (username, password) => {
 	});
 
 	try {
-		await new Promise(resolve => {
+		return new Promise(resolve => {
 			const authDetails = new AuthenticationDetails({
 				Username: username,
 				Password: password
@@ -41,21 +41,22 @@ export const signIn = async (username, password) => {
 				onSuccess: () => {
 					cognitoUser.getSession((err, session) => {
 						if (err) {
-							resolve({ success: false });
+							resolve({ success: false, reason: err });
 						} else {
 							cognitoUser.setSignInUserSession(session);
 							resolve({ success: true, session });
 						}
 					});
 				},
-				onFailure: () => {
-					resolve({ success: false });
+				onFailure: reason => {
+					resolve({ success: false, reason });
 				}
 			});
 		});
 	} catch (e) {
 		return {
-			success: false
+			success: false,
+			reason: e
 		};
 	}
 };
@@ -81,5 +82,25 @@ export const signUp = async (email, password, given_name, family_name, birthdate
 				resolve(result.user);
 			}
 		);
+	});
+};
+
+export const verifyUser = (Username, code) => {
+	const cognitoUser = new CognitoUser({
+		Username,
+		Pool: userPool
+	});
+
+	return new Promise((resolve, reject) => {
+		try {
+			cognitoUser.confirmRegistration(code, true, (err, result) => {
+				if (err) {
+					reject(err);
+				}
+				resolve(result);
+			});
+		} catch (e) {
+			reject(e);
+		}
 	});
 };
